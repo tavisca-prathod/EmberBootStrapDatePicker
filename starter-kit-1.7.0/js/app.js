@@ -53,8 +53,8 @@ App.DatePickerView = Em.View.extend({
 		},
 
 		blackOutDateOnChangeMonth : function(e) {
+			if(self.selectedDates!=null)
 			self.selectedDates.forEach(
-					
 				function(dateVal) {
 					var date = new Date(dateVal);
 					if((date < self.endDate) && (date > self.startDate)) {
