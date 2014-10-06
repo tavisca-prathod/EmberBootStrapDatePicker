@@ -19,31 +19,42 @@ App.DatePickerView = Em.View.extend({
 				if(dateRangeValue !== null && dateRangeValue !== undefined && (dateRangeValue.split("-").length-1)>=1) {
 					if((dateRangeValue.split("-").length-1)==1) {
 						var startDate = new Date(dateRangeValue.split("-")[0]);
-						self.startDate = new Date(startDate.getYear(),startDate.getMonth(),startDate.getDate());
+						self.startDate = new Date(startDate.getFullYear(),startDate.getMonth(),startDate.getDate());
 						var endDate = new Date(dateRangeValue.split("-")[1]);
-						self.endDate = new Date(endDate.getYear(),endDate.getMonth(),endDate.getDate());
+						self.endDate = new Date(endDate.getFullYear(),endDate.getMonth(),endDate.getDate());
 					}
 					else if((dateRangeValue.split("-").length-1)>3){
 						var startDate = new Date(dateRangeValue.split("-")[0]);
-						self.startDate = new Date(startDate.getYear(),startDate.getMonth(),startDate.getDate());
+						self.startDate = new Date(startDate.getFullYear(),startDate.getMonth()+1,startDate.getDate());
 						var endDate = new Date(dateRangeValue.split("-")[1]);
-						self.endDate = new Date(endDate.getYear(),endDate.getMonth(),endDate.getDate());
+						self.endDate = new Date(endDate.getFullYear(),endDate.getMonth()+1,endDate.getDate());
 					}
 				}
 
 				//console.log((self.$('td[data-month="'+self.startDate.getMonth()+'"[data-year="'+self.startDate.getYear()+'"]')).length);
 				if(self.startDate !== undefined && self.endDate !== undefined) {
-					var count = 0;
-					console.log((self.$('td[data-month="'+self.startDate.getMonth()+'"]'+'[data-year="'+self.startDate.getFullYear()+'"]')).length);
-					console.log(self.startDate);
-					console.log(self.endDate);
-					console.log(self.startDate.getDate());
-					console.log(self.startDate.setDate(self.endDate.getDate()+1));
-					for(self.startDate;self.startDate <= self.endDate; self.startDate.setDate(self.endDate.getDate()+1)){
+					for(self.startDate;self.startDate <= self.endDate; self.startDate.setDate(self.startDate.getDate()+1)){
 						//$("td[data-month='9'][data-year='2014']").children("a:contains(9)");
-						console.log("running for "+count);
-						if(count >10)
-							break;
+						//console.log(($('td[data-month="'+self.startDate.getMonth()+'"[data-year="'+self.startDate.getFullYear()+'"]')).length);
+						//correct version console.log(($('td[data-month="'+self.startDate.getMonth()+'"]'+'[data-year="'+self.startDate.getFullYear()+'"]')));
+					//	console.log((self.$('td[data-month="'+self.startDate.getMonth()+'"[data-year="'+self.startDate.getYear()+'"]')).length);
+						var selectedDateanchorElement = ($('td[data-month="'+self.startDate.getMonth()+'"]'+'[data-year="'+self.startDate.getFullYear()+'"]')).children('a:eq("'+(self.startDate.getDate()-1)+'")');
+
+						var tdElement = ($('td[data-month="'+self.startDate.getMonth()+'"]'+'[data-year="'+self.startDate.getFullYear()+'"]'));
+
+
+						tdElement.children().filter(function() {
+							if($(this).text()===self.startDate.getDate().toString()) {
+								self.$(this).attr('class','selected-excluded-date');
+							}
+						});
+						//(selectedDateanchorElement[0]).css({background : '#F00'});
+						//var anchorTagWithDateValue = selectedDateanchorElement[0];
+						//$(anchorTagWithDateValue).css('background','#F00');	
+						//anchorTagWithDateValue.style.background = '#F00';
+
+						//console.log(anchorTagWithDateValue.style.background);
+
 					}
 				}
 			}
