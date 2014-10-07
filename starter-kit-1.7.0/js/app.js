@@ -26,8 +26,7 @@ App.DatePickerView = Em.View.extend({
 						self.endDate = dateRangeValue.split("-")[1];
 					}
 				}
-
-
+				self.$().daterange('refresh');
 			}
 		};
 		this.$().daterange(opts);
