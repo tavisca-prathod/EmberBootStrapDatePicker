@@ -3,6 +3,6 @@
     margin: 20px;
 }
 
-.selected-excluded-date {
-	background: #F00;
+..ui-datepicker-range > .selected-excluded-date {
+	background-color: #F00;
 }

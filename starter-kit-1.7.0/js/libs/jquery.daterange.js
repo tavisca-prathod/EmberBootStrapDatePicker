@@ -70,7 +70,6 @@
     };
 
     opts.beforeShowDay = function (date) {
-
       var out = [true, ""], extraOut;
 
       if (lastDateRange && lastDateRange.start <= date) {
