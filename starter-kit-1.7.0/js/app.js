@@ -15,23 +15,30 @@ App.DatePickerView = Em.View.extend({
 	daysMin : [ "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" ],
 	disableDaysArray : ['Monday','Tu'],
 	dateRange : 3,
+	dateFormat : 'dd-mm-yy',
 	didInsertElement : function (){
 		var self = this;
 		var opts = {
-			//dateFormat : 'dd-mm-yy',
+			dateFormat : self.get('dateFormat'),
 			maxDate : new Date('11/6/2014'),
 			minDate : new Date('10/6/2014'),
 			onSelect : function(dataText,inst){
 				inst.inline = true;
 				var dateRangeValue = inst.input.val();
-				self.getEndDateForRangeSpecified(dateRangeValue);
+			//	self.getEndDateForRangeSpecified(dateRangeValue);
 				if(dateRangeValue !== null && dateRangeValue !== undefined && (dateRangeValue.split("-").length-1)>=1) {
 					if(((dateRangeValue.split("-").length-1)==1)) {
-						var startDate = new Date(dateRangeValue.split("-")[0]);
-						self.set('startDate',new Date(startDate.getFullYear(),startDate.getMonth(),startDate.getDate()));
-						var endDate = new Date(dateRangeValue.split("-")[1]);
-						self.set('endDate',new Date(endDate.getFullYear(),endDate.getMonth(),endDate.getDate()));
-						self.getEndDateForRangeSpecified(endDate);
+						var startDate = $.datepicker.parseDate(self.get('dateFormat'),(dateRangeValue.split("-")[0]));
+						self.set('startDate',startDate);
+						var endDate = $.datepicker.parseDate(self.get('dateFormat'),(dateRangeValue.split("-")[1]));
+						self.set('endDate',endDate);
+						//self.getEndDateForRangeSpecified(endDate);
+					}
+					else if(((dateRangeValue.split("-").length-1) > 3)) {
+						var startDate = $.datepicker.parseDate(self.get('dateFormat'),(dateRangeValue.split(" - ")[0]));
+						self.set('startDate',startDate);
+						var endDate = $.datepicker.parseDate(self.get('dateFormat'),(dateRangeValue.split(" - ")[1]));
+						self.set('endDate',endDate);
 					}
 				}
 			},
@@ -79,7 +86,7 @@ App.DatePickerView = Em.View.extend({
 		var date = $.datepicker.parseDate('mm/dd/yy',startDate.toString());
 		var endDate = date;
 		for(var i=0; i < this.get('dateRange');i++) {
-			var maxNumberOfMonths = this.
+			//var maxNumberOfMonths = this.k
 		}
 	}
 });
